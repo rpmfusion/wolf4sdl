@@ -1,0 +1,12 @@
+diff -up Wolf4SDL-1.6-src/version.h~ Wolf4SDL-1.6-src/version.h
+--- Wolf4SDL-1.6-src/version.h~	2010-12-27 09:32:35.000000000 +0100
++++ Wolf4SDL-1.6-src/version.h	2010-12-27 09:33:08.986486882 +0100
+@@ -10,7 +10,7 @@
+ /* Defines used for different versions */
+ 
+ #define SPEAR
+-//#define SPEARDEMO
++#define SPEARDEMO
+ //#define UPLOAD
+ //#define GOODTIMES
+ #define CARMACIZED
