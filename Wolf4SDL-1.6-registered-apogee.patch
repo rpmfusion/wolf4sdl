@@ -1,0 +1,12 @@
+--- wolf4sdl-1.6.orig/version.h
++++ wolf4sdl-1.6/version.h
+@@ -7,7 +7,7 @@
+ 
+ //#define SPEAR
+ //#define SPEARDEMO
+ //#define UPLOAD
+-#define GOODTIMES
++//#define GOODTIMES
+ #define CARMACIZED
+ //#define APOGEE_1_0
+ //#define APOGEE_1_1
