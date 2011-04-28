@@ -1,36 +1,27 @@
 Name:           wolf4sdl
 Version:        1.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        SDL port of id Software's Wolfenstein 3D
 Group:          Amusements/Games
 License:        Distributable
-# These url's are for a version targeted mainly at Mac OS X
-# The original wolf4sdl site was:
-# http://www.stud.uni-karlsruhe.de/~uvaue/chaos
-# But this gives 403 errors now a days.
-URL:            http://chrisballinger.info/wolf4sdl/
-Source0:        http://chrisballinger.info/wolf4sdl/Wolf4SDL-1.6-src.zip
-# All the below files and the package description are taken from the Debian
+URL:            http://www.alice-dsl.net/mkroll/
+Source0:        http://www.alice-dsl.net/mkroll/bins/Wolf4SDL-1.6-src.zip
+Source1:        %{name}.desktop
+# Update to 1.7 svn snapshot
+Patch0:         wolf4sdl-1.7-svn255.patch
+# The below patch and the package description are taken from the Debian
 # package by Fabian Greffrath <fabian+debian@greffrath.com>
 # License:
 #  Copying and distribution of the Debian packaging, with or without
 #  modification are permitted in any medium without royalty provided the
 #  copyright notice and this notice are preserved. The Debian packaging is
 #  offered as-is, without any warranty.
-Source1:        %{name}.6
-Source2:        %{name}.desktop
-Source3:        %{name}.xpm
-Patch0:         01-shareware-version.patch
-Patch1:         02-enable-shading.patch
-Patch2:         10-datadir.patch
-Patch3:         11-configdir.patch
-Patch4:         21-compiler-warnings.patch
-# end Debian files
-Patch5:         Wolf4SDL-1.6-compile-fixes.patch
-Patch6:         Wolf4SDL-1.6-registered-apogee.patch
-Patch7:         Wolf4SDL-1.6-spear.patch
-Patch8:         Wolf4SDL-1.6-speardemo.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Patch1:         wolf4sdl-1.7-svn255-debian.patch
+# Patches to create different configurations to build
+Patch2:         Wolf4SDL-1.6-registered-apogee.patch
+Patch3:         Wolf4SDL-1.6-shareware.patch
+Patch4:         Wolf4SDL-1.6-spear.patch
+Patch5:         Wolf4SDL-1.6-speardemo.patch
 BuildRequires:  SDL-devel SDL_mixer-devel desktop-file-utils
 
 %global desc \
@@ -119,87 +110,74 @@ Destiny prequel to Wolfenstein 3D.
 
 
 %prep
-%setup -q -c
-pushd Wolf4SDL-1.6-src
+%setup -c -T -n Wolf4SDL-1.6-src
+# Must unpack ourselves to make zip do dos2unix conversion
+pushd .. && unzip -a -q %{SOURCE0} && popd
+%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-
-chmod -x *.cpp *.h *.inc
-
-mkdir ../doc
-for i in Changes.txt README.txt license-*.txt; do
-    cat $i | sed 's|\r||g' > ../doc/$i
-    touch -r $i ../doc/$i
+for i in debian/patches/*.patch; do
+    patch -p1 < $i
 done
-
-popd
 
 
 %build
-pushd Wolf4SDL-1.6-src
 CFLAGS="$RPM_OPT_FLAGS -Wno-sign-compare -Wno-switch -Wno-unused-result"
-CFLAGS="$CFLAGS $(sdl-config --cflags)"
+CFLAGS="$CFLAGS -fno-toplevel-reorder $(sdl-config --cflags)"
 
 make %{?_smp_mflags} \
     CFLAGS="$CFLAGS -DDATADIR=\\\"/usr/share/wolf3d/registered-id/\\\""
 mv wolf3d %{name}-registered-id
-cp %{SOURCE2} %{name}-registered-id.desktop
+cp %{SOURCE1} %{name}-registered-id.desktop
 sed -i 's|@NAME@|Wolfenstein 3D Registered (id)|g' \
     %{name}-registered-id.desktop
 sed -i 's|@VARIANT@|registered-id|g' %{name}-registered-id.desktop
 make clean
 
-patch -p1 < %{PATCH6}
+patch -p1 < %{PATCH2}
 make %{?_smp_mflags} \
     CFLAGS="$CFLAGS -DDATADIR=\\\"/usr/share/wolf3d/registered-apogee/\\\""
 mv wolf3d %{name}-registered-apogee
-cp %{SOURCE2} %{name}-registered-apogee.desktop
+cp %{SOURCE1} %{name}-registered-apogee.desktop
 sed -i 's|@NAME@|Wolfenstein 3D Registered (Apogee)|g' \
     %{name}-registered-apogee.desktop
 sed -i 's|@VARIANT@|registered-apogee|g' %{name}-registered-apogee.desktop
 make clean
 
-patch -p1 < %{PATCH0}
+patch -p1 < %{PATCH3}
 make %{?_smp_mflags} \
     CFLAGS="$CFLAGS -DDATADIR=\\\"/usr/share/wolf3d/shareware/\\\""
 mv wolf3d %{name}-shareware
-cp %{SOURCE2} %{name}-shareware.desktop
+cp %{SOURCE1} %{name}-shareware.desktop
 sed -i 's|@NAME@|Wolfenstein 3D Shareware (Apogee)|g' %{name}-shareware.desktop
 sed -i 's|@VARIANT@|shareware|g' %{name}-shareware.desktop
 make clean
 
-patch -p1 < %{PATCH7}
+patch -p1 < %{PATCH4}
 make %{?_smp_mflags} \
     CFLAGS="$CFLAGS -DDATADIR=\\\"/usr/share/spear/full/\\\""
 mv wolf3d %{name}-spear
-cp %{SOURCE2} %{name}-spear.desktop
+cp %{SOURCE1} %{name}-spear.desktop
 sed -i 's|@NAME@|Spear of Destiny|g' %{name}-spear.desktop
 sed -i 's|@VARIANT@|spear|g' %{name}-spear.desktop
 make clean
 
-patch -p1 < %{PATCH8}
+patch -p1 < %{PATCH5}
 make %{?_smp_mflags} \
     CFLAGS="$CFLAGS -DDATADIR=\\\"/usr/share/spear/demo/\\\""
 mv wolf3d %{name}-spear-demo
-cp %{SOURCE2} %{name}-spear-demo.desktop
+cp %{SOURCE1} %{name}-spear-demo.desktop
 sed -i 's|@NAME@|Spear of Destiny Demo|g' %{name}-spear-demo.desktop
 sed -i 's|@VARIANT@|spear-demo|g' %{name}-spear-demo.desktop
 
-popd
-
 
 %install
-pushd Wolf4SDL-1.6-src
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man6
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
-install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man6
-install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/pixmaps
+install -p -m 644 debian/man/wolf4sdl.6 $RPM_BUILD_ROOT%{_mandir}/man6
+install -p -m 644 debian/pixmaps/wolf4sdl.xpm $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 install -m 755 %{name}-registered-id $RPM_BUILD_ROOT%{_bindir}
 ln -s wolf4sdl.6 $RPM_BUILD_ROOT%{_mandir}/man6/wolf4sdl-registered-id.6
@@ -229,8 +207,6 @@ ln -s wolf4sdl.6 $RPM_BUILD_ROOT%{_mandir}/man6/wolf4sdl-spear-demo.6
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
     %{name}-spear-demo.desktop
 
-popd
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -238,7 +214,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files registered-id
 %defattr(-,root,root,-)
-%doc doc/*
+%doc Changes.txt README.txt license-*.txt
 %{_bindir}/%{name}-registered-id
 %{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-registered-id.6*
@@ -249,7 +225,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files registered-apogee
 %defattr(-,root,root,-)
-%doc doc/*
+%doc Changes.txt README.txt license-*.txt
 %{_bindir}/%{name}-registered-apogee
 %{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-registered-apogee.6*
@@ -260,7 +236,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files shareware
 %defattr(-,root,root,-)
-%doc doc/*
+%doc Changes.txt README.txt license-*.txt
 %{_bindir}/%{name}-shareware
 %{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-shareware.6*
@@ -269,7 +245,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files spear
 %defattr(-,root,root,-)
-%doc doc/*
+%doc Changes.txt README.txt license-*.txt
 %{_bindir}/%{name}-spear
 %{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-spear.6*
@@ -280,7 +256,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files spear-demo
 %defattr(-,root,root,-)
-%doc doc/*
+%doc Changes.txt README.txt license-*.txt
 %{_bindir}/%{name}-spear-demo
 %{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-spear-demo.6*
@@ -289,5 +265,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 27 2011 Hans de Goede <hdegoede@redhat.com> 1.6-2
+- Original upstream is back
+- Rebase to new (original) 1.6 src zip
+- Add a number of patches from upstream svn (bring version up to svn255 commit)
+- Rebase patches borrowed from Debian to the latest Debian package
+
 * Mon Dec 27 2010 Hans de Goede <hdegoede@redhat.com> 1.6-1
 - Initial rpmfusion package
