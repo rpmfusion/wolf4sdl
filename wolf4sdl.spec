@@ -1,6 +1,6 @@
 Name:           wolf4sdl
 Version:        1.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        SDL port of id Software's Wolfenstein 3D
 Group:          Amusements/Games
 License:        Distributable
@@ -265,6 +265,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 09 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.6-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Wed Apr 27 2011 Hans de Goede <hdegoede@redhat.com> 1.6-2
 - Original upstream is back
 - Rebase to new (original) 1.6 src zip
