@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>wolf4sdl-spear.desktop</id>
+  <extends>wolf4sdl-spear-dem.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>Engine for Spear of Destiny full version</name>
+  <summary>
+   Place the Spear of Destiny data files under /usr/share/wolf3d/spear/full
+  </summary>
+  <url type="homepage">https://en.wikipedia.org/wiki/Spear_of_Destiny_%28video_game%29</url>
+  <updatecontact>jwrdegoede_at_gmail.com</updatecontact>
+</component>

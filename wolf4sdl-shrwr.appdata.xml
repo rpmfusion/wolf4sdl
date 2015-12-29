@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop">
+  <id>wolf4sdl-shrwr.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and proprietary</project_license>
+  <name>SDL port of Wolfenstein 3D</name>
+  <summary>Classic first person shooter</summary>
+  <description>
+    <p>
+     Maybe it was the fact that people got to blow away Nazis. Maybe it was
+     the sheer challenge of it all. For whatever reason Wolfenstein 3D
+     pioneered the first-person shooter genre and brought its legendary
+     creators, id Software, worldwide notoriety and numerous awards. In fact,
+     The Computer Gaming World Hall of Fame recognized Wolfenstein 3D as
+     helping to shape the overall direction of the computer gaming industry.
+    </p>
+    <p>
+     Wolf4SDL is an open-source port of id Software's classic first-person
+     shooter Wolfenstein 3D to the cross-platform multimedia library
+     "Simple DirectMedia Layer (SDL)". It is meant to keep the original feel
+     while taking advantage of some improvements.
+    </p>
+    <p>
+     This package contains wolf4sdl compiled for playing the shareware version
+     of Wolfenstein 3D, as well as the Wolfenstein 3D shareware data files.
+    </p>
+  </description>
+  <url type="homepage">https://en.wikipedia.org/wiki/Wolfenstein_3D</url>
+  <screenshots>
+    <screenshot type="default">http://fps.maros.pri.ee/images/galleries/w4sdl310619.jpg</screenshot>
+    <screenshot>http://fps.maros.pri.ee/images/galleries/w4sdl916509.jpg</screenshot>
+    <screenshot>http://fps.maros.pri.ee/images/galleries/w4sdl167564.jpg</screenshot>
+  </screenshots>
+  <updatecontact>jwrdegoede_at_gmail.com</updatecontact>
+</component>

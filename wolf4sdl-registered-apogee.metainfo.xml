@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>wolf4sdl-registered-apogee.desktop</id>
+  <extends>wolf4sdl-shrwr.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>Engine for Wolfenstein 3D registered (Apogee version)</name>
+  <summary>
+   Place the Apogee registered version's data files under
+   /usr/share/wolf3d/registered-apogee
+  </summary>
+  <url type="homepage">https://en.wikipedia.org/wiki/Wolfenstein_3D</url>
+  <updatecontact>jwrdegoede_at_gmail.com</updatecontact>
+</component>
