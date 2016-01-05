@@ -1,6 +1,6 @@
 Name:           wolf4sdl
 Version:        1.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        SDL port of id Software's Wolfenstein 3D
 Group:          Amusements/Games
 License:        GPLv2+
@@ -23,7 +23,6 @@ Patch2:         Wolf4SDL-1.6-shareware.patch
 Patch3:         Wolf4SDL-1.6-spear.patch
 Patch4:         Wolf4SDL-1.6-speardemo.patch
 BuildRequires:  SDL-devel SDL_mixer-devel desktop-file-utils libappstream-glib
-Requires:       hicolor-icon-theme
 
 %global desc \
 Maybe it was the fact that people got to blow away Nazis. Maybe it was the \
@@ -42,9 +41,18 @@ while taking advantage of some improvements.
 %{desc}
 
 
+%package        common
+Summary:        Common files for %{name}
+Requires:       hicolor-icon-theme
+
+%description common
+Common files for %{name}.
+
+
 %package        registered-id
 Summary:        SDL port of Wolfenstein 3D - id Software registered version
 URL:            http://www.idsoftware.com/games/wolfenstein/wolf3d/
+Requires:       %{name}-common = %{version}-%{release}
 
 %description registered-id
 This package contains %{name} compiled for playing the registered version of
@@ -60,6 +68,7 @@ before starting %{name}-registered-id. Note all file-names must be lowercase!
 %package        registered-apogee
 Summary:        SDL port of Wolfenstein 3D - Apogee registered version
 URL:            http://www.3drealms.com/wolf3d/index.html
+Requires:       %{name}-common = %{version}-%{release}
 
 %description registered-apogee
 This package contains %{name} compiled for playing the registered version of
@@ -76,6 +85,7 @@ registered version. Place the data files under
 %package        shareware
 Summary:        SDL port of id Software's Wolfenstein 3D - shareware version
 URL:            http://www.3drealms.com/wolf3d/index.html
+Requires:       %{name}-common = %{version}-%{release}
 Requires:       wolf3d-shareware
 
 %description shareware
@@ -87,6 +97,7 @@ Wolfenstein 3D.
 %package        spear
 Summary:        SDL port of Wolfenstein 3D - Spear of Destiny version
 URL:            http://www.idsoftware.com/games/wolfenstein/spear/
+Requires:       %{name}-common = %{version}-%{release}
 
 %description spear
 This package contains %{name} compiled for playing the Spear of Destiny
@@ -102,6 +113,7 @@ Place the data files under /usr/share/spear/full before starting
 %package        spear-demo
 Summary:        SDL port of Wolfenstein 3D - Spear of Destiny demo version
 URL:            http://www.idsoftware.com/games/wolfenstein/spear/
+Requires:       %{name}-common = %{version}-%{release}
 Requires:       spear-demo
 
 %description spear-demo
@@ -218,82 +230,68 @@ appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}*.xml
 
 
-%post
+%post common
 touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
-%postun
+%postun common
 if [ $1 -eq 0 ] ; then
     touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 
-%posttrans
+%posttrans common
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
-%files registered-id
+%files common
 %doc Changes.txt README.txt
 %license debian/copyright license-gpl.txt
-%{_bindir}/%{name}-registered-id
 %{_mandir}/man6/%{name}.6*
+%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+
+%files registered-id
+%{_bindir}/%{name}-registered-id
 %{_mandir}/man6/%{name}-registered-id.6*
 %{_datadir}/appdata/%{name}-registered-id.metainfo.xml
 %{_datadir}/applications/%{name}-registered-id.desktop
-%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
-%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 %dir %{_datadir}/wolf3d
 %dir %{_datadir}/wolf3d/registered-id
 
 %files registered-apogee
-%doc Changes.txt README.txt
-%license debian/copyright license-gpl.txt
 %{_bindir}/%{name}-registered-apogee
-%{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-registered-apogee.6*
 %{_datadir}/appdata/%{name}-registered-apogee.metainfo.xml
 %{_datadir}/applications/%{name}-registered-apogee.desktop
-%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
-%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 %dir %{_datadir}/wolf3d
 %dir %{_datadir}/wolf3d/registered-apogee
 
 %files shareware
-%doc Changes.txt README.txt
-%license debian/copyright license-gpl.txt
 %{_bindir}/%{name}-shareware
-%{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-shareware.6*
 %{_datadir}/appdata/%{name}-shrwr.appdata.xml
 %{_datadir}/applications/%{name}-shrwr.desktop
-%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
-%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 %files spear
-%doc Changes.txt README.txt
-%license debian/copyright license-gpl.txt
 %{_bindir}/%{name}-spear
-%{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-spear.6*
 %{_datadir}/appdata/%{name}-spear.metainfo.xml
 %{_datadir}/applications/%{name}-spear.desktop
-%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
-%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 %dir %{_datadir}/spear
 %dir %{_datadir}/spear/full
 
 %files spear-demo
-%doc Changes.txt README.txt
-%license debian/copyright license-gpl.txt
 %{_bindir}/%{name}-spear-demo
-%{_mandir}/man6/%{name}.6*
 %{_mandir}/man6/%{name}-spear-demo.6*
 %{_datadir}/appdata/%{name}-spear-dem.appdata.xml
 %{_datadir}/applications/%{name}-spear-dem.desktop
-%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
-%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 
 %changelog
+* Tue Jan  5 2016 Hans de Goede <j.w.r.degoede@gmail.com> - 1.7-2
+- Add a -common subpackage containing the shared icon, manpage and doc files
+- Fix missing icon-cache scriptlets / Fix icon not showing
+
 * Thu Dec 31 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.7-1
 - Upstream is dead, start using Debian sources as upstream
 - Update to 1.7+svn262+dfsg1-3 sources
