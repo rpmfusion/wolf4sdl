@@ -5,3 +5,4 @@ Comment=An open-source port of id Software's classic first-person shooter
 Icon=wolf4sdl
 Exec=wolf4sdl-@VARIANT@
 Categories=Game;ActionGame;
+Keywords=game;fps;first;person;shooter;wolfenstein;wolf3d;

@@ -1,6 +1,6 @@
 Name:           wolf4sdl
 Version:        1.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        SDL port of id Software's Wolfenstein 3D
 Group:          Amusements/Games
 License:        GPLv2+
@@ -288,6 +288,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Sat Jan 16 2016 Hans de Goede <j.w.r.degoede@gmail.com> - 1.7-3
+- Add keywords to .desktop file
+
 * Tue Jan  5 2016 Hans de Goede <j.w.r.degoede@gmail.com> - 1.7-2
 - Add a -common subpackage containing the shared icon, manpage and doc files
 - Fix missing icon-cache scriptlets / Fix icon not showing
