@@ -1,6 +1,6 @@
 Name:           wolf4sdl
 Version:        1.7
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        SDL port of id Software's Wolfenstein 3D
 Group:          Amusements/Games
 License:        GPLv2+
@@ -288,6 +288,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Sun Mar 26 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.7-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Sat Jan 16 2016 Hans de Goede <j.w.r.degoede@gmail.com> - 1.7-3
 - Add keywords to .desktop file
 
