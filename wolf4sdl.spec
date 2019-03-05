@@ -23,6 +23,7 @@ Patch2:         Wolf4SDL-1.6-shareware.patch
 Patch3:         Wolf4SDL-1.6-spear.patch
 Patch4:         Wolf4SDL-1.6-speardemo.patch
 BuildRequires:  SDL-devel SDL_mixer-devel desktop-file-utils libappstream-glib
+BuildRequires:  gcc-c++
 
 %global desc \
 Maybe it was the fact that people got to blow away Nazis. Maybe it was the \
