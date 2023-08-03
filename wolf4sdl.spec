@@ -1,6 +1,6 @@
 Name:           wolf4sdl
 Version:        1.7
-Release:        16%{?dist}
+Release:        17%{?dist}
 Summary:        SDL port of id Software's Wolfenstein 3D
 Group:          Amusements/Games
 License:        GPLv2+
@@ -289,6 +289,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Thu Aug 03 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.7-17
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
+
 * Mon Aug 08 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.7-16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
   5.1
